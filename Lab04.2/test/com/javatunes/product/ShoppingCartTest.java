@@ -22,7 +22,15 @@ public class ShoppingCartTest {
     cart.addItem(new MusicItem("CD-501"));
     cart.addItem(new MediaPlayer("MP3-LP150"));
     // sanity check, this qualifies as "too simple to fail"
-    // assertEquals(2, cart.size());
+    assertEquals(2, cart.size());
+  }
+
+  @Test
+  public void testShoppingCartTotal(){
+    ShoppingCart<Product> cart = new ShoppingCart<>();
+    cart.addItem(new MusicItem("CD-501"));
+    cart.addItem(new MediaPlayer("MP3-LP150"));
+    assertEquals(60, cart.total(), 0.001);
   }
   
   /**

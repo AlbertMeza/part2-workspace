@@ -12,6 +12,7 @@ public class MusicItem
 extends Product {
   
   public MusicItem(String code) {
+
     super(code);
   }
   
