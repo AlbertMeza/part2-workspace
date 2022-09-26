@@ -14,10 +14,14 @@ import java.util.Collection;
 /**
  * Note the interface type TaxPayer, used throughout the class.
  */
-public class IRS {
+public class IRS{
   // what types of objects can this collection contain?
   private Collection<TaxPayer> payers = new ArrayList<>();
-  
+
+  public static IRS getInstance() {
+    return IRS.getInstance();
+  }
+
   // what methods are available on each 'payer' reference?
   public void collectTaxes() {
     for (TaxPayer payer : payers) {

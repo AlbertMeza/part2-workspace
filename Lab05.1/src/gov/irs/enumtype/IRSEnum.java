@@ -12,11 +12,36 @@ import java.util.ArrayList;
 import java.util.Collection;
 import gov.irs.TaxPayer;
 
-public enum IRSEnum {
-  INSTANCE;
+enum IRSEnum implements IRS {
+  INSTANCE; //public static final IRSEnum INSTANCE = new IRSEnum();
+  
+  // so we can see when IRSEnum class is loaded
+  static {
+    System.out.println("--IRSEnum class loaded");
+  }
   
   // BUSINESS CODE
   private Collection<TaxPayer> payers = new ArrayList<>();
+  
+  // so we can see when INSTANCE is created
+  IRSEnum() {
+    System.out.println("--IRSEnum ctor: the instance has been created");
+  }
+  
+  // not needed – just makes enum look more like regular singleton
+  public static IRSEnum getInstance() {
+    return INSTANCE;
+  }
+
+
+  /*
+   * superfluous static method that shouldn't be here
+   * if you call it, class is loaded and INSTANCE is created (prematurely)
+   * so just don't have superfluous static methods and your enum solution is indeed lazy
+   */
+  public static void touch() {
+    // no-op
+  }
   
   public void collectTaxes() {
     for (TaxPayer payer : payers) {
@@ -26,30 +51,5 @@ public enum IRSEnum {
   
   public void register(TaxPayer payer) {
     payers.add(payer);
-  }
-  
-  
-  // not needed – just makes enum look more like regular singleton
-  public static IRSEnum getInstance() {
-    return INSTANCE;
-  }
-
-  // so we can see when IRSEnum class is loaded
-  static {
-    System.out.println("--IRSEnum class loaded");
-  }
-  
-  // so we can see when INSTANCE is created
-  IRSEnum() {
-    System.out.println("--IRSEnum ctor: the instance has been created");
-  }
-  
-  /*
-   * superfluous static method that shouldn't be here
-   * if you call it, class is loaded and INSTANCE is created (prematurely)
-   * so just don't have superfluous static methods and your enum solution is indeed lazy
-   */
-  public static void touch() {
-    // no-op
   }
 }
