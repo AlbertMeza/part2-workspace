@@ -22,6 +22,7 @@ public class EmployeeStreamsTest {
   @Before
   public void setUp() {
     allEmployees = Department.getDepartment().getEmployees();
+
   }
   
   /**

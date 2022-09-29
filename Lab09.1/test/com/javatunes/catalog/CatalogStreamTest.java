@@ -11,6 +11,7 @@ package com.javatunes.catalog;
 import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Before;
@@ -42,7 +43,9 @@ public class CatalogStreamTest {
     assertEquals(Long.valueOf(11), items.get(0).getId());
     assertEquals(Long.valueOf(10), items.get(1).getId());
   }
-  
+
+
+
   /**
    * TASK: find all MusicItems where title is same as artist and sort them by natural order.
    * MusicItem implements Comparable: natural order is id increasing.
@@ -52,6 +55,11 @@ public class CatalogStreamTest {
   @Test
   public void testTitleEqualsArtistSortNaturalOrder() {
     // TODO
+    List<MusicItem> sameArtist = allMusicItems.stream()
+        .filter(item -> item.getArtist().equals(item.getTitle()))
+        .collect(Collectors.toList());
+
+    System.out.println(sameArtist);
   }
   
   /**
@@ -64,6 +72,12 @@ public class CatalogStreamTest {
   @Test
   public void testPriceLessThanSortMusicCategory() {
     // TODO
+    List<MusicItem> underTwelve = allMusicItems.stream()
+        .filter(phil -> phil.getPrice() < 12)
+        .sorted(Comparator.comparing(tony -> tony.getMusicCategory()))
+        .collect(Collectors.toList());
+
+    System.out.println(underTwelve);
   }
   
   /**
@@ -74,6 +88,11 @@ public class CatalogStreamTest {
   @Test
   public void testSortMusicCategorySortReleaseDateDesc() {
     // TODO
+    List<MusicItem> rockBaby = allMusicItems.stream()
+        .filter(song -> song.getPrice() < 15 && song.getMusicCategory() == MusicCategory.ROCK)
+        .sorted(Comparator.comparing((MusicItem oldies) -> oldies.getReleaseDate()))
+        .collect(Collectors.toList());
+    System.out.println(rockBaby);
   }
   
   /**
@@ -85,6 +104,12 @@ public class CatalogStreamTest {
   @Test
   public void testPriceGreaterThanSortPriceDescThenMusicCategory() {
     // TODO
+    List<MusicItem> expensive = allMusicItems.stream()
+        .filter(imPoor -> imPoor.getPrice() > 17)
+        .sorted(Comparator.comparing((MusicItem stillPoor) -> -1 * stillPoor.getPrice()).thenComparing(item -> item.getArtist()))
+        .collect(Collectors.toList());
+
+    System.out.println(expensive);
   }
   
   /**
@@ -96,5 +121,10 @@ public class CatalogStreamTest {
   @Test
   public void testReleaseDateSortArtist() {
     // TODO
+    List<MusicItem> oldAndCheap = allMusicItems.stream()
+        .filter(song -> song.getPrice() < 12 && song.getReleaseDate().toString().startsWith("198"))
+        .collect(Collectors.toList());
+
+    System.out.println(oldAndCheap);
   }
 }
